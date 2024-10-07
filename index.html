@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#004d40">
+    <meta name="description" content="Fishing Planet Clone - Ultimate fishing experience.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="manifest" href="manifest.json">
+    <title>Fishing Planet Clone</title>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <h1>Fishing Planet Clone</h1>
+        <p>The Ultimate Fishing Adventure!</p>
+    </header>
+
+    <!-- Main Game Container -->
+    <section id="game-container">
+        <canvas id="game-canvas"></canvas>
+        <!-- UI Elements for Gameplay -->
+        <div id="game-ui">
+            <div class="ui-row">
+                <button id="cast-btn" class="game-btn">Cast Line</button>
+                <button id="reel-btn" class="game-btn">Reel In</button>
+                <button id="tension-btn" class="game-btn">Adjust Tension</button>
+            </div>
+            <div id="score-board">
+                <p>Level: <span id="level">1</span></p>
+                <p>Fish Caught: <span id="fish-caught">0</span></p>
+                <p>Credits: <span id="credits">100</span></p>
+            </div>
+            <div id="gear-upgrades">
+                <button id="shop-btn" class="game-btn">Go to Shop</button>
+                <button id="inventory-btn" class="game-btn">Inventory</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional UI for Shop and Inventory -->
+    <section id="modal-container">
+        <!-- Shop Modal -->
+        <div id="shop-modal" class="modal">
+            <h2>Shop</h2>
+            <p>Purchase new rods, reels, and lures with your credits.</p>
+            <button id="buy-rod-btn">Buy Rod</button>
+            <button id="buy-lure-btn">Buy Lure</button>
+            <button id="close-shop-btn">Close</button>
+        </div>
+        
+        <!-- Inventory Modal -->
+        <div id="inventory-modal" class="modal">
+            <h2>Inventory</h2>
+            <p>Check your current gear.</p>
+            <ul id="inventory-list"></ul>
+            <button id="close-inventory-btn">Close</button>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2024 Fishing Planet Clone. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript for game logic -->
+    <script src="js/game.js"></script>
+</body>
+</html>
