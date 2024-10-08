@@ -334,3 +334,17 @@ function changeTimeOfDay() {
 
 // Day-Night cycle loop
 setInterval(changeTimeOfDay, dayDuration);
+// Modify fish behavior based on gear and environment
+function checkBait(baitPosition, baitAttraction) {
+    const distance = this.position.distanceTo(baitPosition);
+    let chanceToBite = baitAttraction;
+
+    if (currentWeather === 'Rainy') chanceToBite += 5; // Rain makes fish more likely to bite
+    if (timeOfDay === 'Night') chanceToBite -= 5; // Fish are more cautious at night
+
+    if (distance < 1 && Math.random() * 100 < chanceToBite) {
+        console.log(`${this.type} is biting!`);
+        return true;
+    }
+    return false;
+}
