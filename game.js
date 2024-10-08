@@ -191,3 +191,96 @@ spawnFish();
 animateFish();
 updateScore();
 init();
+// Gear Types
+const gear = {
+    rods: [
+        { name: "Basic Rod", strength: 10, cost: 0 },
+        { name: "Pro Rod", strength: 20, cost: 100 },
+        { name: "Master Rod", strength: 40, cost: 250 }
+    ],
+    reels: [
+        { name: "Basic Reel", durability: 10, cost: 0 },
+        { name: "Pro Reel", durability: 20, cost: 100 },
+        { name: "Master Reel", durability: 40, cost: 250 }
+    ],
+    baits: [
+        { name: "Worm", attraction: 10, cost: 0 },
+        { name: "Shiner", attraction: 20, cost: 50 },
+        { name: "Lure", attraction: 30, cost: 150 }
+    ]
+};
+
+// Player's Inventory (Initial Gear)
+let currentRod = gear.rods[0];
+let currentReel = gear.reels[0];
+let currentBait = gear.baits[0];
+
+// Purchase gear function
+function purchaseGear(type, index) {
+    const selectedGear = gear[type][index];
+    if (credits >= selectedGear.cost) {
+        credits -= selectedGear.cost;
+        if (type === 'rods') currentRod = selectedGear;
+        if (type === 'reels') currentReel = selectedGear;
+        if (type === 'baits') currentBait = selectedGear;
+        console.log(`Purchased: ${selectedGear.name}`);
+        updateScore();
+    } else {
+        console.log("Not enough credits to buy this gear!");
+    }
+}
+
+// Casting with upgraded gear
+function castLine() {
+    if (!isCasting) {
+        isCasting = true;
+        console.log(`Casting line with ${currentRod.name}, ${currentReel.name}, and ${currentBait.name}...`);
+
+        const baitPosition = new THREE.Vector3(
+            (Math.random() - 0.5) * 20,
+            -1,
+            (Math.random() - 0.5) * 20
+        );
+
+        const nearbyFish = fishList.find(fish => fish.checkBait(baitPosition, currentBait.attraction));
+
+        if (nearbyFish) {
+            console.log(`${nearbyFish.type} is biting!`);
+            activeFish = nearbyFish;
+        } else {
+            console.log("No fish near the bait.");
+            isCasting = false;
+        }
+    }
+}
+
+// Reel in with upgraded gear
+function reelIn() {
+    if (activeFish) {
+        const fishStruggle = activeFish.struggle();
+        const rodStrength = currentRod.strength;
+        const reelDurability = currentReel.durability;
+
+        if (fishStruggle === 'tug') {
+            console.log(`${activeFish.type} is struggling!`);
+            tension -= 10 - rodStrength / 5; // Rod strength reduces the tension loss
+        } else {
+            console.log(`${activeFish.type} is relaxing, reel it in!`);
+            tension += 5 + reelDurability / 5; // Reel durability helps gain more tension
+        }
+
+        if (tension > 100) {
+            console.log(`${activeFish.type} escaped!`);
+            activeFish = null;
+            isCasting = false;
+        }
+
+        if (tension < 20) {
+            fishCaught++;
+            console.log(`Caught a ${activeFish.type} with ${currentRod.name}!`);
+            credits += 20; // Reward for catching
+            activeFish = null;
+            isCasting = false;
+        }
+    }
+}
