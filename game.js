@@ -284,3 +284,29 @@ function reelIn() {
         }
     }
 }
+// Weather States
+const weatherStates = ['Sunny', 'Rainy', 'Cloudy', 'Night'];
+let currentWeather = weatherStates[0];
+
+// Change weather periodically
+function changeWeather() {
+    currentWeather = weatherStates[Math.floor(Math.random() * weatherStates.length)];
+    console.log(`Weather changed to: ${currentWeather}`);
+    updateFishBehavior();
+}
+
+// Update fish behavior based on weather
+function updateFishBehavior() {
+    fishList.forEach(fish => {
+        if (currentWeather === 'Rainy') {
+            fish.speed *= 1.2; // Fish swim faster during rain
+        } else if (currentWeather === 'Night') {
+            fish.speed *= 0.8; // Fish swim slower at night
+        } else {
+            fish.speed = fishTypes.find(type => type.type === fish.type).speed; // Reset to default speed
+        }
+    });
+}
+
+// Weather change loop
+setInterval(changeWeather, 30000); // Change weather every 30 seconds
