@@ -310,3 +310,27 @@ function updateFishBehavior() {
 
 // Weather change loop
 setInterval(changeWeather, 30000); // Change weather every 30 seconds
+// Day-Night Cycle Variables
+let timeOfDay = 'Day'; // Initial time is day
+const dayDuration = 60000; // 1 minute per cycle
+
+// Update lighting for day-night cycle
+function updateLighting() {
+    if (timeOfDay === 'Day') {
+        directionalLight.intensity = 0.8;
+        ambientLight.intensity = 0.5;
+    } else if (timeOfDay === 'Night') {
+        directionalLight.intensity = 0.2;
+        ambientLight.intensity = 0.1;
+    }
+}
+
+// Change time of day
+function changeTimeOfDay() {
+    timeOfDay = timeOfDay === 'Day' ? 'Night' : 'Day';
+    console.log(`Time of day changed to: ${timeOfDay}`);
+    updateLighting();
+}
+
+// Day-Night cycle loop
+setInterval(changeTimeOfDay, dayDuration);
